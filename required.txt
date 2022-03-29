@@ -1,0 +1,25 @@
+---post product
+---get product 
+---get all products
+---update product
+---delete product
+---signin customer
+---signup customer
+---signin admin
+---get all customers
+---get customer
+---get customer cart items
+---add to cart(panier)
+---delete from cart items
+---rate product
+
+coming 
+buy product(paypal)
+order of payment
+get all order of user
+statistiques of user
+verify email 
+forget password send by email
+delete rate
+modify rate
+add images to comment(rate)
