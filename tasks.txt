@@ -1,0 +1,2 @@
+delete all products and categories
+update product idea

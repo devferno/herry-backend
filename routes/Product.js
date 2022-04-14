@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const fs = require("fs");
 const path = require("path");
-const Category = require("../models/Category");
+
 const { Product } = require("../models");
 const { verifyAdmin } = require("../utils/middlewares");
 const { upload } = require("../utils/uploadStorage");
@@ -20,15 +20,9 @@ router.post("/", verifyAdmin, upload.array("image", 4), async (req, res) => {
       fs.unlinkSync(path.join(__dirname + "/../uploads/" + element.filename));
       images.push(obj);
     });
-
-    //if category already exist dont create a new one
-    let category = await Category.findOne({ type, gender });
-    if (category == null) category = new Category({ type, gender });
-
-    let product = {};
-    category.save().then(() => {
-      product = {
-        category: category._id,
+      let product = {
+        type,
+        gender,
         name,
         price: parseInt(price),
         description,
@@ -43,11 +37,20 @@ router.post("/", verifyAdmin, upload.array("image", 4), async (req, res) => {
         }
       });
       res.status(200).json(product);
-    });
+    
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+//this route to delete all products
+// router.delete("/delete-all",async(req,res)=>{
+//   try{
+//     Product.deleteMany({},()=>res.status(200).json("sf thniti ms7ti ga3 les collection"));
+//   }catch(err){
+//     res.status(500).json(err);
+//   }
+// })
 
 //get all products
 router.get("/", async (req, res) => {
@@ -58,6 +61,7 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 //get one product
 router.get("/:id", async (req, res) => {
   try {
